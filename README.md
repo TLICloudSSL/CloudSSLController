@@ -8,4 +8,4 @@ v0.0.1
 * Initial Ansible Module to deploy LB(Haproxy Container) on AWS instance
 
 # Overall Design
-Please see docs/
+Please see doc/
