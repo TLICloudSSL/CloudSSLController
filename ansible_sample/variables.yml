@@ -1,0 +1,11 @@
+STATE_RES_NAME: "${STATE_RES_NAME}"
+ec2_region: "eu-west-2"
+ec2_instance_type: "t2.micro"
+ec2_image: "ami-b2b55cd5"
+ec2_keypair: "limao_mac"
+ec2_volume_size: 10
+ec2_count: 3
+ec2_security_group_id: "sg-9a6258f1"
+ec2_subnet_id: "subnet-2571c75e"
+ec2_tag_Type: "${ec2_instance_type}"
+ec2_tag_Role: "tli"
