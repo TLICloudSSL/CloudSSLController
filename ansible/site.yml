@@ -1,3 +1,0 @@
----
-- name: This is Mock playbook right now, just gather facts for all hosts
-  hosts: all
