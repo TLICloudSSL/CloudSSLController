@@ -7,11 +7,15 @@ v0.0.0 (2018/07/30)
 * Overall Design Doc
 * Initial Project with empty ansible modules
 
-# TODO
-v0.0.1
+# Done
+v0.0.1 (2018/08/16)
 * Initial Ansible Module to deploy instance on AWS
-* Initial Anisble Module to talk with Route53 to control DNS
 * Initial Ansible Module to deploy LB(Haproxy Container) on AWS instance
+
+# TODO
+v0.0.2
+* Initial SSL and haproxy configuration
+* Initial Anisble Module to talk with Route53 to control DNS
 
 
 # Overall Design
