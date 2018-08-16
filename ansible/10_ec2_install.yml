@@ -1,0 +1,12 @@
+---
+- hosts: tag_LB_True
+  user: ec2-user
+  tasks:
+    - name: echo "LB"
+      shell: echo "LB"
+
+- hosts: tag_RS_True
+  user: ec2-user
+  tasks:
+    - name: echo "RS"
+      shell: echo "RS"
