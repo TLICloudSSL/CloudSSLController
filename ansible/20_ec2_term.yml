@@ -11,7 +11,7 @@
       run_once: true
       ec2_remote_facts:
         filters:
-          "tag:LB": "{{ ec2_tag_LB }}"
+          "tag:Role": "{{ ec2_tag_Role_LB}}"
         region: "{{ ec2_region }}"
       register: instances
 
@@ -33,7 +33,7 @@
       run_once: true
       ec2_remote_facts:
         filters:
-          "tag:RS": "{{ ec2_tag_RS }}"
+          "tag:Role": "{{ ec2_tag_Role_RS }}"
         region: "{{ ec2_region }}"
       register: instances
 

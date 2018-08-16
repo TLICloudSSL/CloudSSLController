@@ -1,0 +1,12 @@
+---
+- name: Install the httpd rpm
+  yum: name=httpd state=latest
+  become: yes
+
+- name: start the httpd service
+  service: name=httpd state=started enabled=yes
+  become: yes
+
+- template: src=hello.j2 dest=/var/www/html/hello owner=root group=root mode=0644
+  notify: restart httpd
+  become: yes

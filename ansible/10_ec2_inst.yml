@@ -1,0 +1,10 @@
+---
+- hosts: tag_Role_LB
+  user: ec2-user
+  roles:
+    - haproxy
+
+- hosts: tag_Role_RS
+  user: ec2-user
+  roles:
+    - realserver

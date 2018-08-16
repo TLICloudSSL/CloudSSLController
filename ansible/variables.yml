@@ -10,8 +10,8 @@ ec2_tag_Type: "${ec2_instance_type}"
 
 # LB Variables
 LB_ec2_count: 2
-ec2_tag_LB: "True"
+ec2_tag_Role_LB: "LB"
 
 # Real Server Variables
 RS_ec2_count: 2
-ec2_tag_RS: "True"
+ec2_tag_Role_RS: "RS"
