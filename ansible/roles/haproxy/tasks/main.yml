@@ -1,3 +1,28 @@
 ---
-- name: common actions
-  shell: echo "hello, common role"
+- name: Install the docker rpm
+  yum: name=docker state=latest
+  become: yes
+
+- name: Install the docker-py pip
+  pip: name=docker-py state=latest
+  become: yes
+
+- name: start the docker service
+  service: name=docker state=started enabled=yes
+  become: yes
+
+- name: pull an image
+  docker_image:
+    name: zhenggu/haproxy
+  become: yes
+
+- name: haproxy container
+  docker_container:
+    name: haproxy
+    image: zhenggu/haproxy
+    state: started
+    volumes:
+     - /root:/etc/haproxy
+    published_ports:
+     - 443:443
+  become: yes
