@@ -1,1 +1,14 @@
 ---
+- name: restart haproxy
+  docker_container:
+    name: haproxy
+    image: zhenggu/haproxy
+    state: started
+    restart: yes
+    volumes:
+     - /root:/etc/haproxy
+    published_ports:
+     - 443:443
+     - 80:80
+     - 1993:1993
+  become: yes

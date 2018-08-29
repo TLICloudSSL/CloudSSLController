@@ -1,0 +1,80 @@
+#---------------------------------------------------------------------
+# Example configuration for a possible web application.  See the
+# full configuration options online.
+#
+#   http://haproxy.1wt.eu/download/1.4/doc/configuration.txt
+#
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+# Global settings
+#---------------------------------------------------------------------
+global
+    # to have these messages end up in /var/log/haproxy.log you will
+    # need to:
+    #
+    # 1) configure syslog to accept network log events.  This is done
+    #    by adding the '-r' option to the SYSLOGD_OPTIONS in
+    #    /etc/sysconfig/syslog
+    #
+    # 2) configure local2 events to go to the /var/log/haproxy.log
+    #   file. A line like the following can be added to
+    #   /etc/sysconfig/syslog
+    #
+    #    local2.*                       /var/log/haproxy.log
+    #
+    log         127.0.0.1 local2
+
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    tune.ssl.default-dh-param 4096
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+
+listen haproxy.stats
+    bind 0.0.0.0:1993 transparent
+    mode http
+    stats enable
+    stats uri /
+    stats auth admin:tli
+
+listen vip
+    bind 0.0.0.0:443 transparent ssl crt /etc/haproxy/cert
+    bind 0.0.0.0:80 transparent
+    mode http
+    http-request set-header X-Forwarded-Proto https if { ssl_fc }
+    http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
+    http-request set-header X-Forwarded-Port %[dst_port]
+    cookie SERVERID insert indirect nocache
+    redirect scheme https code 301 if !{ ssl_fc }
+    rsprep ^Location:\ http://(.*) Location:\ https://\1
+{% for host in groups['tag_Role_RS'] %}
+    server tli{{ loop.index }} {{ host }}:80 check cookie tli{{ loop.index }}  fall 5 inter 2000 rise 2
+{% endfor %}
+
