@@ -135,6 +135,7 @@
 - name: pull an image
   docker_image:
     name: zhenggu/haproxy
+    tag: 0.3
   notify: restart haproxy
   become: yes
 
@@ -151,7 +152,7 @@
 - name: haproxy container
   docker_container:
     name: haproxy
-    image: zhenggu/haproxy
+    image: "zhenggu/haproxy:0.3"
     state: started
     volumes:
      - /root:/etc/haproxy
