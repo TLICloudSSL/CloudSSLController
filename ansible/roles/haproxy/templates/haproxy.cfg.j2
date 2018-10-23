@@ -25,11 +25,13 @@ global
     #
     log         127.0.0.1 local2
 
+    daemon
     chroot      /var/lib/haproxy
     pidfile     /var/run/haproxy.pid
-    maxconn     4000
+    maxconn     10000
     user        haproxy
     group       haproxy
+    nbproc      {{ ansible_processor_vcpus }}
     tune.ssl.default-dh-param 2048
 
     # turn on stats unix socket
